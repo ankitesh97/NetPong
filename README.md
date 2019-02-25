@@ -1,4 +1,3 @@
-Introduction
 ============
 This game can be played over a network, local or internet. However internet play is not possible on slow connections due to lack of any latency optimizations.
 
@@ -10,7 +9,7 @@ Requirements
 Configuration/Installation
 ===========================
 There are three files, one server (Game.py) and two client files (Client1.py & Client2.py).
-The files are configured to work on 'localhost' by default. 
+The files are configured to work on 'localhost' by default.
 
 If you want to play on different computers, find the following line in the client files:
 
@@ -18,16 +17,16 @@ If you want to play on different computers, find the following line in the clien
 
 and replace `localhost` with the IP Address of the server.
 
-`python Game.py` will start the server. 
+`python Game.py` will start the server.
 `python Clientx.py` will connect to the server and start the game.
 
 ### Game logic and physics
-The game passes around a gamedata dictionary that contains all the variables related to the position of the elements. This dictionary is passed by the server to the clients and the clients use it to render the objects (using PyGame library functions). When a player gives keyboard inputs on the client side, these inputs are passed via the RPyC connection to the movepad function back at the server. The function updates the gamedata dictionary with the pad and ball's new positions and sends it back to the client. 
+The game passes around a gamedata dictionary that contains all the variables related to the position of the elements. This dictionary is passed by the server to the clients and the clients use it to render the objects (using PyGame library functions). When a player gives keyboard inputs on the client side, these inputs are passed via the RPyC connection to the movepad function back at the server. The function updates the gamedata dictionary with the pad and ball's new positions and sends it back to the client.
 
 The physics logic of the game is fairly simple, just a bunch of `if` statements that take care of the ball and pads' movements and collision detection. This is all contained in the server file.
 
 ### Network communication
-The game has a client-server model. The client runs a `while 1:` loop which takes keyboard inputs. The server runs an RPyC server that listens for connections. 
+The game has a client-server model. The client runs a `while 1:` loop which takes keyboard inputs. The server runs an RPyC server that listens for connections.
 
 The server has a `PongGame` class which extends the `rpyc.Service` class. This enables it to expose functions that can be invoked by clients remotely. Once the client establishes a connection with the server, the PongGame class's exposed methods are at its disposal. In our case, it is the `exposed_movepad` function.
 
